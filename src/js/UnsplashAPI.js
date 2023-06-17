@@ -1,5 +1,46 @@
-const BASE_URL = 'https://api.unsplash.com';
-const API_KEY = 'LxvKVGJqiSe6NcEVZOaLXC-f2JIIWZaq_o0WrF8mwJc';
+import axios from "axios";
+
+
+
+export class UnsplashAPI {
+  #BASE_URL = 'https://api.unsplash.com';
+  #API_KEY = 'LxvKVGJqiSe6NcEVZOaLXC-f2JIIWZaq_o0WrF8mwJc';
+  #query = ''
+
+  constructor(perPage) {
+    this.per_page = perPage
+  }
+
+  getPopularPhotos(page) {
+    return axios.get(`${this.#BASE_URL}/search/photos`, {
+      params: {
+        query: 'random',
+        page,
+        per_page: this.per_page,
+        client_id: this.#API_KEY
+      }
+    })
+  }
+
+  getPhotoByQuery(page) {
+    return axios.get(`${this.#BASE_URL}/search/photos`, {
+      params: {
+        query: this.#query,
+        page,
+        per_page: this.per_page,
+        client_id: this.#API_KEY
+      }
+    })
+  }
+
+  set query(newQuery) {
+  this.#query = newQuery
+  }
+
+  get query() {
+    return this.#query
+  }
+}
 
 /**
   |============================
